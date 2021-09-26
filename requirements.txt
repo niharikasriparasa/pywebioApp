@@ -1,5 +1,5 @@
 #django
-#gunicorn
+gunicorn
 #django-heroku
 pywebio
 pandas
