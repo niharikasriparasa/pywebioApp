@@ -5,6 +5,10 @@ from pywebio.output import *
 import pandas as pd
 from pywebio.session import defer_call, info as session_info, run_async
 from pywebio import start_server
+from flask import Flask, send_from_directory
+from pywebio.platform.flask import webio_view
+
+app = Flask(__name__)
 
 #response_result={'response':[],'no_of_attempts':[],'dlevel':[]}
 plant="Plants are mainly multicellular organisms, predominantly photosynthetic eukaryotes of the kingdom Plantae.Historically, plants were treated as one of two kingdoms including all living things that were not animals, and all algae and fungi were treated as plants.However, all current definitions of Plantae exclude the fungi and some algae, as well as the prokaryotes .By one definition, plants form the clade Viridiplantae , a group that includes the flowering plants, conifers and other gymnosperms, ferns and their allies, hornworts, liverworts, mosses and the green algae, but excludes the red and brown algae.Green plants obtain most of Green plants energy from sunlight via photosynthesis by primary chloroplasts that are derived from endosymbiosis with cyanobacteria.cyanobacteria chloroplasts contain chlorophylls a and b, which gives Their chloroplastsTheir chloroplasts green color.Some plants are parasitic or mycotrophic and have lost the ability to produce normal amounts of chlorophyll or to photosynthesize.Plants are characterized by sexual reproduction and alternation of generations, although asexual reproduction is also common.There are about 320,000 species of plants, of which the great majority, some 260–290 thousand, produce seeds.Green plants provide a substantial proportion of the world's molecular oxygen, and are the basis of most of Earth's ecosystems.Plants that produce grain, fruit and vegetables also form basic human foods and have been domesticated for millennia.Plants have many cultural and other uses, as ornaments, building materials, writing material and, in great variety, Plants have been the source of medicines and psychoactive drugs.The scientific study of plants is known as botany, a branch of biology."
@@ -96,7 +100,7 @@ def show_survey_table(dums):
     put_table(dums, header=['Name', 'Email', 'sessionID', '1', '2', '3', '4', '5', '6', 'Suggestions'])
 
 def show_riddle_responses(dums2):
-    put_table(dums2,header=['sessionID','dlevel','response','no_of_attempts'])
+    put_table(dums2,header=['sessionID','dlevel','response','no_of_attempts','q30'])
 
 def main():
     while True:
@@ -114,6 +118,7 @@ def main():
         if info['Name'] == 'niha' and info['Email'] == 'parasaniharikasri.np@gmail.com':
             show_survey_table(dums)
             show_riddle_responses(dums2)
+            break
         else:
             clear()
             result = get_riddles(RidInp)
@@ -150,9 +155,11 @@ def main():
             toast('Your responses are saved.Thank you!')
             time.sleep(5)
 
+app.add_url_rule('/tool', 'webio_view', webio_view(main),
+            methods=['GET', 'POST', 'OPTIONS'])
 
 if __name__ == '__main__':
-    start_server(main, debug=True, port=8080, cdn=False)#remote access = True
+    start_server(main, port=8080)#remote access = True
 
 #capture info in excel
 #user info , responses and survey response
