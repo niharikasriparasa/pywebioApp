@@ -1,1 +1,1 @@
-web: python test.py --port=$PORT
+web: gunicorn test.py:app
