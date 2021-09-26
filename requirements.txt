@@ -2,4 +2,4 @@
 #gunicorn
 #django-heroku
 pywebio
-pandas
+pandas==1.15.0
