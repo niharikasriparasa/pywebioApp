@@ -7,6 +7,7 @@ from pywebio.session import defer_call, info as session_info, run_async
 from pywebio import start_server
 from flask import Flask, send_from_directory
 from pywebio.platform.flask import webio_view
+import argparse
 
 app = Flask(__name__)
 
@@ -159,7 +160,13 @@ app.add_url_rule('/tool', 'webio_view', webio_view(main),
             methods=['GET', 'POST', 'OPTIONS'])
 
 if __name__ == '__main__':
-    start_server(main, port=8080)#remote access = True
+    #start_server(main, port=8080)#remote access = True   
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-p", "--port", type=int, default=8080)
+    args = parser.parse_args()
+
+    start_server(main, port=args.port)
+
 
 #capture info in excel
 #user info , responses and survey response
