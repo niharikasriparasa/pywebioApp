@@ -73,9 +73,9 @@ def input_answer():
 
 def get_riddles(RidInp):
   #response_result = {'response': [], 'no_of_attempts': []}
+  response_result = {'response': [], 'no_of_attempts': [], 'dlevel': []}
   for index,row in RidInp.iterrows():
       #print(riddle['level'])
-      response_result = {'response': [], 'no_of_attempts': [], 'dlevel': []}
       put_text('Difficulty level: '+ row['Difficulty_level'])
       if row['Difficulty_level']=='Easy':
           for sentence in row['Riddle'].split('.'):
@@ -106,7 +106,7 @@ def show_riddle_responses(dums2):
 def main():
     while True:
         put_markdown(r""" # Welcome !
-            There are 29 riddles both easy and difficult.
+            There are 20 riddles both easy and difficult.
             Maximum attempts to solve easy riddles is 3 without hints.
             Maximum attempts to solve difficult riddles is 4 with hints.
             Hints will automatically popup after first attempt.
