@@ -81,6 +81,7 @@ def get_riddles(RidInp):
           for sentence in row['Riddle'].split('.'):
               put_text(sentence)
           response, no_of_attempts = retry(row['Answer'])
+          put_text('The answer is : ' + row['Answer'])
           response_result['response'].append(response)
           response_result['no_of_attempts'].append(no_of_attempts)
           response_result['dlevel'].append('Easy')
@@ -89,11 +90,12 @@ def get_riddles(RidInp):
           for sentence in row['Riddle'].split('.'):
               put_text(sentence)
           response,no_of_attempts=retry_hints(row['Hints'],row['Answer'])
+          put_text('The answer is : ' + row['Answer'])
           response_result['response'].append(response)
           response_result['no_of_attempts'].append(no_of_attempts)
           response_result['dlevel'].append('Difficult')
       #difficult riddle and hints
-      time.sleep(1)
+      time.sleep(2)
       clear()
   return response_result
 
